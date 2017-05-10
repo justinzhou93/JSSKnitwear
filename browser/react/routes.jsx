@@ -12,6 +12,7 @@ import SingleProductContainer from './containers/SingleProductContainer';
 import UserProfileContainer from './containers/UserProfileContainer';
 import HomeComponent from './components/HomeComponent';
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 import AddAddressContainer from './containers/AddAddressContainer';
 import OrderConfirmation from './components/OrderConfirmation';
@@ -39,6 +40,7 @@ export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchC
         <Route path="checkout" component={CartCheckOutContainer} />
         <Route path="orderconfirmation" component={OrderConfirmation} />
         <Route path="adminlogin" component={Login} />
+        <Route path="adminsignup" component={Signup} />
       </Route>
     </Router>
   );

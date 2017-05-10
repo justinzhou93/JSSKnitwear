@@ -49,8 +49,19 @@ router.get('/:id', (req, res, next) => {
 
 // ADMIN: post new product
 router.post('/', (req, res, next) => {
-  Product.create(req.body)
-    .then((createdProduct) => res.json(createdProduct))
+    Product.create(req.body)
+    .then((createdProduct) => {
+        res.json(createdProduct)
+        var productsizes = req.body.size.map(size => Size.findOne({where: {id: size.id}}));
+        var productcolors = req.body.color.map(color => Color.findOne({where: {id: color.id}}));
+        Promise.all([productsizes, productcolors])
+        .spread((productsizevalues, productcolorvalues) => {
+            var sizeAssociations = productsizevalues.map(size => createdProduct.setSize(size));
+            var colorAssociations = productcolorvalues.map(size => createdProduct.setColor(size));
+            Promise.all(...sizeAssociations, ...colorAssociations)
+            .then(() => console.log('set all associations'))
+        })
+    })
     .catch(next)
 })
 

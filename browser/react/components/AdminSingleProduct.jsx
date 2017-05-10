@@ -38,8 +38,12 @@ export default class AdminSingleProduct extends React.Component {
                         ${this.props.product.price}
                 </div>
                 <div className="admin-product-inv">
-                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Inventory</h4><br />
-                        {this.props.product.inventory}
+                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Colors</h4><br />
+                        {this.props.product.color}
+                </div>
+                <div className="admin-product-inv">
+                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Sizes</h4><br />
+                        {this.props.product.size}
                 </div>
                 <div className="admin-links">
                     <a onClick={this.showEditProductOnClick} className="admin-remove-link">Edit</a><br />

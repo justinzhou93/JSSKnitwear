@@ -15,11 +15,18 @@ export default function (props) {
                         <div className="sing-product-desc">
                             <h2>{props.currentProduct.title}</h2>
                             <p>{props.currentProduct.description}</p>
+                            <div>
+                              {props.currentProduct.colors.map(color => {
+                                return (
+                                  <div key={color.id} className="colorSample" style="background-color:#000000"/>
+                                )
+                              })}
+                            </div>
                         </div>
-                        <div className="sing-product-cart">
+                        {/*<div className="sing-product-cart">
                             <b className="sing-product-price" style={{fontSize: '20px'}}>${props.currentProduct.price}</b>
                             <button onClick={props.addToCartOnClick} type="button" className="btn btn-primary" style={{borderRadius: '4px'}}>Add to cart</button>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
                 <div className="reviews-container">

@@ -22,6 +22,7 @@ export class AllProductsContainer extends React.Component {
 
     renderFilteredProducts() {
         const filteredProducts = this.props.productList.filter(product => product.title.toLowerCase().match(this.state.inputValue));
+        console.log(this.props.currentUser)
         return (
             this.props.currentUser && this.props.currentUser.isAdmin ?
                 <AdminProductsContainer productList={filteredProducts} /> :
@@ -41,7 +42,7 @@ export class AllProductsContainer extends React.Component {
                     handleChange={this.handleChange}
                     inputValue={this.state.inputValue}
                 />
-                { filteredProducts.length ? this.renderFilteredProducts() : <h3 style={{textAlign: 'center'}}>There are no such games found!</h3> }
+              {this.renderFilteredProducts()}
             </div>
         )
     }

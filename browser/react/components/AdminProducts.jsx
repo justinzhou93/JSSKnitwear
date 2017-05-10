@@ -3,6 +3,7 @@ import React from 'react';
 import AdminSingleProduct from './AdminSingleProduct';
 
 export default function (props) {
+    console.log('hi');
     return (
         <div className="flex-container">
             <div className="admin-products-header">

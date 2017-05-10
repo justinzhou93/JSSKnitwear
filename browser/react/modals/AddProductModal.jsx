@@ -25,7 +25,8 @@ class AddProductModal extends React.Component {
             title: evt.target.title.value,
             description: evt.target.description.value,
             price: evt.target.price.value,
-            inventory: evt.target.inventory.value,
+            color: evt.target.color.value,
+            size: evt.target.size.value,
             imgUrl: evt.target.imgUrl.value
         }
         this.props.addingProduct(productInfo);
@@ -67,7 +68,14 @@ class AddProductModal extends React.Component {
 
                                 <div className="form-group">
                                     <div className="input-group">
-                                        <input type="text" name="inventory" className="form-control" id="uPassword" placeholder="Enter inventory stock..." />
+                                        <input type="text" name="color" className="form-control" id="uPassword" placeholder="Enter available colors..." />
+                                        <label htmlFor="uPassword" className="input-group-addon glyphicon glyphicon-list-alt" />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <div className="input-group">
+                                        <input type="text" name="size" className="form-control" id="uPassword" placeholder="Enter available sizes..." />
                                         <label htmlFor="uPassword" className="input-group-addon glyphicon glyphicon-list-alt" />
                                     </div>
                                 </div>

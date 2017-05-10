@@ -7,8 +7,8 @@ import { CART_MODAL } from '../modals/modaltypes';
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
-        this.renderLoginSignup = this.renderLoginSignup.bind(this);
-        this.renderLogout = this.renderLogout.bind(this);
+        // this.renderLoginSignup = this.renderLoginSignup.bind(this);
+        // this.renderLogout = this.renderLogout.bind(this);
     }
 
     render() {
@@ -20,27 +20,30 @@ export default class NavBar extends React.Component {
                 <div className="menu">
                     <ul className="megamenu skyblue">
                         <li><Link to={'/products'} className="color2">Products</Link></li>
-                        {this.renderLogout()}
+                        {/*this.props.currentUser ? this.renderLogout() : this.renderLoginSignup()*/}
+                        <li><Link to={'/home'}>About</Link></li>
+                        <li><Link to={'/home'}>Contact</Link></li>
                     </ul>
                 </div>
-                <ul className="megamenu skyblue cart-link">
+                {/*<ul className="megamenu skyblue cart-link">
                     <li><a onClick={this.props.showCart} className="color2">Cart</a></li>
-                </ul>
+                </ul>*/}
 
             </div>
         );
     }
 
-    // NOTE: USED PERMANENTLY FOR NOW, UNTIL NEW VERION - login with purchase ability
-    renderLogout() {
-        return (
-            <div className="megamenu skyblue">
-                <li><Link to={'/orders'} className="color4">Orders</Link></li>
-                <li><Link to={'/user'} className="color4">My Account</Link></li>
-                <li><a className="color4" onClick={this.props.loggingOut}>Logout</a></li>
-            </div>
-        );
-    }
+
+    // NOTE: NOT USED BECAUSE NOT CORRECT VERSION — login with buy
+    // renderLogout() {
+    //     return (
+    //         <div className="megamenu skyblue">
+    //             <li><Link to={'/orders'} className="color4">Orders</Link></li>
+    //             <li><Link to={'/user'} className="color4">My Account</Link></li>
+    //             <li><a className="color4" onClick={this.props.loggingOut}>Logout</a></li>
+    //         </div>
+    //     );
+    // }
 
     // NOTE: NOT USED BECAUSE NOT CORRECT VERSION — login with buy
     // renderLoginSignup() {
