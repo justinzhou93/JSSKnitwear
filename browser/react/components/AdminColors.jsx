@@ -1,7 +1,5 @@
 import React from 'react';
 
-import AdminSingleProduct from './AdminSingleProduct';
-
 export default function (props) {
     return (
         <div className="flex-container">
@@ -12,11 +10,9 @@ export default function (props) {
             <div className="admin-products-list">
                 {props.productList && props.productList.map((product) => {
                     return (
-                        <AdminSingleProduct
-                            key={product.id}
-                            product={product}
-                            loadModal={props.loadModal}
-                        />
+
+
+
                     );
                 })}
             </div>

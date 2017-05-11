@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require('express').Router();
 const Promise = require('bluebird');
 const Product = require('../../db/models/product');
 const Review = require('../../db/models/review');
@@ -51,15 +51,11 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     Product.create(req.body)
     .then((createdProduct) => {
-        res.json(createdProduct)
-        var productsizes = req.body.size.map(size => Size.findOne({where: {id: size.id}}));
         var productcolors = req.body.color.map(color => Color.findOne({where: {id: color.id}}));
-        Promise.all([productsizes, productcolors])
-        .spread((productsizevalues, productcolorvalues) => {
-            var sizeAssociations = productsizevalues.map(size => createdProduct.setSize(size));
-            var colorAssociations = productcolorvalues.map(size => createdProduct.setColor(size));
-            Promise.all(...sizeAssociations, ...colorAssociations)
-            .then(() => console.log('set all associations'))
+        Promise.all([productcolors])
+        .spread((productcolorvalues) => {
+            Promise.all(productcolorvalues.map(size => createdProduct.setColor(size)))
+            .then(() => res.json(createdProduct))
         })
     })
     .catch(next)

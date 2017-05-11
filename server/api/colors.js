@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require('express').Router();
 const Promise = require('bluebird');
 const Product = require('../../db/models/product');
 const Color = require('../../db/models/color')
@@ -62,3 +62,5 @@ router.delete('/:id', (req, res, next) => {
   req.requestedColor.destroy()
   .then(() => res.redirect(204, '/'))
 })
+
+module.exports = router;

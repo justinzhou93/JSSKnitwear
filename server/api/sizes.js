@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require('express').Router();
 const Promise = require('bluebird');
 const Product = require('../../db/models/product');
 const Size = require('../../db/models/size')
@@ -8,7 +8,6 @@ router.param('id', (req, res, next, id) => {
   Size.findOne({
     where: {id},
     include: [
-      {model: Product},
       {model: LineItem}
     ]
   })
@@ -27,7 +26,6 @@ router.param('id', (req, res, next, id) => {
 router.get('/', (req, res, next) => {
     Size.findAll({
         include: [
-            {model: Product},
             {model: LineItem}
         ]
     })
@@ -62,3 +60,5 @@ router.delete('/:id', (req, res, next) => {
     req.requestedSize.destroy()
     .then(() => res.redirect(204, '/'))
 })
+
+module.exports = router;

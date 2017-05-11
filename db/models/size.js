@@ -2,15 +2,30 @@ const Sequelize = require('sequelize');
 const db = require('APP/db');
 
 const Size = db.define('sizes', {
-    shoulder: {
-      type: Sequelize.INTEGER
-    },
-    bust: {
-      type: Sequelize.INTEGER
-    },
-    waist: {
-      type: Sequelize.INTEGER
-    }
+  main: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  shoulder: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  waist: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  bust: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  hip: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  sleeve: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  armCircum: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  },
+  jacketLength: {
+    type: Sequelize.ENUM('P', 'S', 'M', 'L', 'XL', '1X', '2X', '3X')
+  }
 });
 
 module.exports = Size;

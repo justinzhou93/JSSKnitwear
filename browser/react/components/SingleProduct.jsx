@@ -18,7 +18,7 @@ export default function (props) {
                             <div>
                               {props.currentProduct.colors.map(color => {
                                 return (
-                                  <div key={color.id} className="colorSample" style="background-color:#000000"/>
+                                  <div key={color.id} className="colorSample" style="background-color:#000000"></div>
                                 )
                               })}
                             </div>
@@ -31,7 +31,6 @@ export default function (props) {
                 </div>
                 <div className="reviews-container">
                         <div className="reviews-title-header">
-                            <div className="reviews-header-box" />
                             <div className="reviews-header-box">
                                 <h3 className="reviews-title-heading">Reviews</h3>
                             </div>
