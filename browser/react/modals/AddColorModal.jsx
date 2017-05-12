@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { hideModal } from '../action-creators/modals';
-import { addColor } from '../action-creators/color';
+import { addColor } from '../action-creators/colors';
 
 import Modal from './Modal';
 
@@ -43,14 +43,14 @@ class AddColorModal extends React.Component {
                             <form onSubmit={this.addColorSubmit} role="form">
                                 <div className="form-group">
                                     <div className="input-group">
-                                        <input type="text" name="title" className="form-control" id="uLogin" placeholder="Enter color name..." />
+                                        <input type="text" name="name" className="form-control" id="uLogin" placeholder="Enter color name..." />
                                         <label htmlFor="uLogin" className="input-group-addon glyphicon glyphicon-info-sign" />
                                     </div>
                                 </div>
 
                                 <div className="form-group">
                                     <div className="input-group">
-                                        <textarea type="text" name="description" className="form-control" rows="7" placeholder="Enter color code..." />
+                                        <textarea type="text" name="code" className="form-control" rows="7" placeholder="Enter color code..." />
                                         <label htmlFor="uPassword" className="input-group-addon glyphicon glyphicon-info-sign" />
                                     </div>
                                 </div>

@@ -22,7 +22,9 @@ export default function (props) {
                             <div className="product-title">
                                 <Link to={`/products/${product.id}`}>{product.title}</Link>
                             </div>
-                            {/*<div className="product-price">
+                            {//NOTE: Price and Add to Cart here
+
+                              /*<div className="product-price">
                                 <p>${product.price}</p>
                             </div>
                             <div className="product-price">

@@ -22,7 +22,6 @@ export class AllProductsContainer extends React.Component {
 
     renderFilteredProducts() {
         const filteredProducts = this.props.productList.filter(product => product.title.toLowerCase().match(this.state.inputValue));
-        console.log(this.props.currentUser)
         return (
             this.props.currentUser && this.props.currentUser.isAdmin ?
                 <AdminProductsContainer productList={filteredProducts} /> :
@@ -35,7 +34,6 @@ export class AllProductsContainer extends React.Component {
     }
 
     render() {
-        const filteredProducts = this.props.productList.filter(product => product.title.toLowerCase().match(this.state.inputValue));
         return (
             <div>
                 <FilterBar
@@ -49,7 +47,6 @@ export class AllProductsContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
     return {
         productList: state.products.productList,
         currentUser: state.auth.currentUser
