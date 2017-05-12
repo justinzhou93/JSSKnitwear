@@ -13,6 +13,7 @@ import UserProfileContainer from './containers/UserProfileContainer';
 import HomeComponent from './components/HomeComponent';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import AdminColorsContainer from './containers/AdminColorsContainer';
 
 import AddAddressContainer from './containers/AddAddressContainer';
 import OrderConfirmation from './components/OrderConfirmation';
@@ -20,11 +21,12 @@ import CartCheckOutContainer from './containers/CartCheckOutContainer';
 
 import {loadAllProducts, loadSingleProduct} from './action-creators/products';
 import {loadSingleOrder, loadAllOrders} from './action-creators/orders';
+import {loadAllColors} from './action-creators/colors'
 import { loadLoggedInUser } from './action-creators/auth';
 
 /* -----------------     COMPONENT ROUTES     ------------------ */
 
-export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchCurrentUser}) {
+export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchCurrentUser, fetchAllColors}) {
   return (
     <Router history={browserHistory} >
       <Route path="/" component={App} onEnter={fetchProducts}>
@@ -32,6 +34,7 @@ export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchC
         <Route path="home" component={HomeComponent} />
         <Route path="products" component={AllProductsContainer} />
         <Route path="products/:productId" component={SingleProductContainer} onEnter={fetchSingleProduct} />
+        <Route path="colors" component={AdminColorsContainer} onEnter={fetchAllColors} />
 
         <Route path="orders" component={AllOrdersContainer} onEnter={fetchAllOrders} />
 
@@ -53,7 +56,8 @@ const mapDispatchToProps = dispatch => ({
   fetchProducts: () => dispatch(loadAllProducts()),
   fetchSingleProduct: nextRouterState => dispatch(loadSingleProduct(nextRouterState.params.productId)),
   fetchSingleOrder: nextRouterState => dispatch(loadSingleOrder(nextRouterState.params.orderid)),
-  fetchAllOrders: () => dispatch(loadAllOrders())
+  fetchAllOrders: () => dispatch(loadAllOrders()),
+  fetchAllColors: () => dispatch(loadAllColors())
 });
 
 export default connect(null, mapDispatchToProps)(Root);
