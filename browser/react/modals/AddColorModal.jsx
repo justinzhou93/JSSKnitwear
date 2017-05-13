@@ -6,7 +6,6 @@ import { addColor } from '../action-creators/colors';
 
 import Modal from './Modal';
 
-/** TODO: add color route from addColor action-creator */
 class AddColorModal extends React.Component {
     constructor(props) {
         super(props);

@@ -18,9 +18,6 @@ const LineItem = db.define('lineitems', {
         purchase: function (userId) {
             const creatingOrder = LineItem.totalCartPrice(userId)
                 .then((total) => {
-                    // TODO not sure how to pass this error down through to the routes.
-                    // just checking to make sure cart is not empty. right now, it doesn't allow
-                    // orders to go through if cart is empty, but it doesn't pass error thru correctly
                     if (!total){
                       const err = new Error('no items in cart!')
                       err.status = 400;

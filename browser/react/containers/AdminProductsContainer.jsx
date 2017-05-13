@@ -5,9 +5,8 @@ import AdminProducts from '../components/AdminProducts';
 
 import { loadSingleProduct } from '../action-creators/products';
 import { loadModal } from '../action-creators/modals';
-import { ADD_PRODUCT_MODAL, DELETE_WARNING_MODAL } from '../modals/modaltypes';
+import { ADD_PRODUCT_MODAL } from '../modals/modaltypes';
 
-/** TODO: set store state for currentProductToBeDeleted, use that product.id to delete product in Modal */
 export class AdminProductsContainer extends React.Component {
     constructor(props) {
         super(props);

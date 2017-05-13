@@ -32,7 +32,7 @@ const Size = db.model('sizes');
 //     .catch(next))
 
 
-// TODO: this is for admin use only
+// NOTE: this is for admin use only
 router.get('/', (req, res, next) => {
   User.findAll()
   .then(users => res.json(users))

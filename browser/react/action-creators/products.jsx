@@ -22,12 +22,6 @@ const setSingleProduct = (product) => {
     }
 }
 
-const removeProduct = () => {
-    return {
-        type: REMOVE_SINGLE_PRODUCT
-    }
-}
-
 /** Thunk actions */
 
 // load all products

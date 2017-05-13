@@ -6,7 +6,6 @@ import { deleteProduct } from '../action-creators/products';
 
 import Modal from './Modal';
 
-/** TODO: delete route from deleteProduct thunk */
 class DeleteWarningModal extends React.Component {
     constructor(props) {
         super(props);
