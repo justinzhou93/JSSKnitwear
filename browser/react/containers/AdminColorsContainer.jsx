@@ -7,7 +7,6 @@ import { loadSingleColor } from '../action-creators/colors';
 import { loadModal } from '../action-creators/modals';
 import { ADD_COLOR_MODAL } from '../modals/modaltypes';
 
-/** TODO: set store state for currentProductToBeDeleted, use that product.id to delete product in Modal */
 export class AdminColorsContainer extends React.Component {
     constructor(props) {
         super(props);

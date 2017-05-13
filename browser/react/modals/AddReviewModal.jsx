@@ -6,7 +6,6 @@ import { addProductReview } from '../action-creators/products';
 
 import Modal from './Modal';
 
-/** TODO: add product route from addProduct action-creator */
 class AddReviewModal extends React.Component {
     constructor(props) {
         super(props);
