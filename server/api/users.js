@@ -173,11 +173,14 @@ router.get('/:userId/cart', (req, res, next) => {
 
 // user adding product to cart
 router.post('/:userId/cart/:productId', (req, res, next) => {
+  console.log(req.body);
   LineItem.create({
     quantity: req.body.quantity,
     user_id: req.params.userId,
     product_id: req.params.productId,
     price: req.body.price,
+    color_id: req.body.color.id,
+    size: req.body.size,
     status: 'Cart'
   })
     .then(createdCart => {

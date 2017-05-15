@@ -51,12 +51,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     Product.create(req.body)
     .then((createdProduct) => {
-        var productcolors = req.body.color.map(color => Color.findOne({where: {id: color.id}}));
-        Promise.all([productcolors])
-        .spread((productcolorvalues) => {
-            Promise.all(productcolorvalues.map(size => createdProduct.setColor(size)))
-            .then(() => res.json(createdProduct))
-        })
+      res.json(createdProduct);
     })
     .catch(next)
 })
