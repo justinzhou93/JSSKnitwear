@@ -14,11 +14,6 @@ class AddProductModal extends React.Component {
 
         this.onClose = this.onClose.bind(this);
         this.addProductSubmit = this.addProductSubmit.bind(this);
-        this.setInput = this.setInput.bind(this);
-    }
-
-    setInput(event) {
-      this.setState({inputVal: event.target.value})
     }
 
     onClose() {
@@ -31,7 +26,6 @@ class AddProductModal extends React.Component {
             title: evt.target.title.value,
             description: evt.target.description.value,
             price: evt.target.price.value,
-            color: evt.target.color.value,
             imgUrl: evt.target.imgUrl.value
         }
         this.props.addingProduct(productInfo);
@@ -39,11 +33,6 @@ class AddProductModal extends React.Component {
     }
 
     render() {
-      let filteredColors = this.props.colors.filter(color => {
-        if (this.state.inputVal === color.name.slice(0,this.state.inputVal.length) || this.state.inputVal === color.code.slice(0,this.state.inputVal.length)){
-          return color;
-        }
-      })
       return (
         <Modal onClose={this.onClose}>
           <div className="modal-lg">
@@ -94,12 +83,6 @@ class AddProductModal extends React.Component {
       );
     }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return ({
-      colors: state.colors.colorList
-  });
-};
 
 const mapDispatchToProps = dispatch => {
   return {

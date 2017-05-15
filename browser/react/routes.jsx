@@ -27,6 +27,8 @@ import { loadLoggedInUser } from './action-creators/auth';
 /* -----------------     COMPONENT ROUTES     ------------------ */
 
 export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchCurrentUser, fetchAllColors}) {
+  //on enter hook for products container, fetch all colors, so that when selecting single product, all colors are already there
+  //but don't want this on enter hook on single product so we don't have to load every single time.
   return (
     <Router history={browserHistory} >
       <Route path="/" component={App} onEnter={fetchProducts}>
@@ -54,7 +56,10 @@ export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchC
 const mapDispatchToProps = dispatch => ({
   fetchCurrentUser: () => dispatch(loadLoggedInUser()),
   fetchProducts: () => dispatch(loadAllProducts()),
-  fetchSingleProduct: nextRouterState => dispatch(loadSingleProduct(nextRouterState.params.productId)),
+  fetchSingleProduct: nextRouterState => {
+    dispatch(loadSingleProduct(nextRouterState.params.productId));
+    dispatch(loadAllColors());
+  },
   fetchSingleOrder: nextRouterState => dispatch(loadSingleOrder(nextRouterState.params.orderid)),
   fetchAllOrders: () => dispatch(loadAllOrders()),
   fetchAllColors: () => dispatch(loadAllColors())
