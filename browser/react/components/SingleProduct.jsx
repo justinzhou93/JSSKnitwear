@@ -1,26 +1,8 @@
 import React from 'react';
 import StarRatingComponent from 'react-star-rating-component';
+import ProductSidebar from './ProductSidebar';
 
 export default function (props) {
-  let style = function(color){
-    return {
-      width: '50px',
-      height: '50px',
-      backgroundColor: color.code
-    }
-  }
-  let QOptions = function(){
-    let arr = [];
-    for (let i = 1; i <= 25; i++){
-      arr.push(
-        <option key={`QOptions${i}`} value={i}>{i}</option>
-      );
-    }
-    return arr;
-  }
-  let SOptions = function(){
-
-  }
   const changeDate = (dateStr) => dateStr.slice(0, 10).split('-').join('/');
   if (props.currentProduct) {
     const productReviews = props.currentProduct.reviews;
@@ -30,41 +12,19 @@ export default function (props) {
           <div className="sing-product-img-container">
             <img src={props.currentProduct.imgUrl} className="sing-product-img" />
           </div>
-
-          // Product description
-          <div className="sing-product-desc-box">
-            <div className="sing-product-desc">
-              <h2>{props.currentProduct.title}</h2>
-              <p>{props.currentProduct.description}</p>
-            </div>
-            <div className="sing-product-cart">
-              <b className="sing-product-price" style={{fontSize: '20px'}}>${props.currentProduct.price}</b>
-              <div className="productQuantity">
-                <h4>Quantity</h4>
-                <select onChange={props.addQuantity}>
-                  {QOptions()}
-                </select>
-              </div>
-              <div className="admin-products-list">
-                {props.colorList && props.colorList.map((color) => {
-                  return (
-                    <div className="colorSample" key={color.id} onClick={() => props.colorSelect(color)} style={style(color)}><p>{color.name}</p></div>
-                  );
-                })}
-              </div>
-              <div className="productSize">
-                <h4>Size</h4>
-                <select>
-                  {SOptions()}
-                </select>
-              </div>
-              <button type="button" onClick={props.addToCartOnClick} className="btn btn-primary" style={{borderRadius: '4px'}}>Add to cart</button>
-            </div>
-          </div>
-
+          <ProductSidebar
+            currentProduct={props.currentProduct}
+            addToCartOnClick={props.addToCartOnClick}
+            colorList={props.colorList}
+            colorSelect={props.colorSelect}
+            addQuantity={props.addQuantity}
+            addAdjust={props.addAdjust}
+            adjustments={props.adjustments}
+            addSize={props.addSize}
+            />
         </div>
 
-        // product reviews
+        {/*product reviews*/}
         <div className="reviews-container">
           <div className="reviews-title-header">
             <div className="reviews-header-box">

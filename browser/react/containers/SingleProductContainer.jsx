@@ -15,15 +15,15 @@ export class SingleProductContainer extends React.Component {
         this.state = {
           selectedColor: {},
           quantity: 1,
-          size: 'M',
+          size: '',
           adjustments: {
-            shoulder: '',
-            waist: '',
-            bust: '',
-            hip: '',
-            sleeve: '',
-            armCircum: '',
-            jacketLength: ''
+            shoulder: 'default',
+            waist: 'default',
+            bust: 'default',
+            hip: 'default',
+            sleeve: 'default',
+            armCircum: 'default',
+            jacketLength: 'default'
           }
         }
 
@@ -31,11 +31,12 @@ export class SingleProductContainer extends React.Component {
         this.addQuantity = this.addQuantity.bind(this);
         this.addToCartOnClick = this.addToCartOnClick.bind(this);
         this.handleAddReviewOnClick = this.handleAddReviewOnClick.bind(this);
+        this.addAdjust = this.addAdjust.bind(this);
+        this.addSize = this.addSize.bind(this);
     }
 
     addToCartOnClick(evt) {
         evt.preventDefault();
-        console.log(this.state);
         this.props.addingToCart(this.props.currentUser.id, this.props.currentProduct.id, {quantity: this.state.quantity, price: this.props.currentProduct.price, color: this.state.selectedColor})
     }
 
@@ -46,12 +47,25 @@ export class SingleProductContainer extends React.Component {
 
     addQuantity(event){
         event.preventDefault();
-        console.log(event.target.value);
-        this.setState({selectedColor: this.state.selectedColor, quantity: event.target.value})
+        this.setState({quantity: event.target.value})
     }
 
     colorSelect(color){
-        this.setState({selectedColor: color, quantity: this.state.quantity});
+      console.log(this.state);
+        this.setState({selectedColor: color});
+    }
+
+    addSize(evt){
+        evt.preventDefault();
+        this.setState({size: evt.target.value});
+    }
+
+    addAdjust(adj, size){
+        let newState = {};
+        newState[adj] = size;
+        this.setState({
+          adjustments: Object.assign({}, this.state.adjustments, newState)
+        })
     }
 
     render() {
@@ -63,6 +77,9 @@ export class SingleProductContainer extends React.Component {
                 colorList={this.props.colorList}
                 colorSelect={this.colorSelect}
                 addQuantity={this.addQuantity}
+                addAdjust={this.addAdjust}
+                adjustments={this.state.adjustments}
+                addSize={this.addSize}
             />
         )
     }
