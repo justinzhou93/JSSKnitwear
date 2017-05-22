@@ -2,9 +2,8 @@ const router = require('express').Router();
 const Promise = require('bluebird');
 const Product = require('../../db/models/product');
 const Review = require('../../db/models/review');
-const User = require('../../db/models/user')
-const Color = require('../../db/models/color')
-const Size = require('../../db/models/size')
+const User = require('../../db/models/user');
+const Image = require('../../db/models/image');
 
 router.param('id', (req, res, next, id) => {
     Product.findOne({
@@ -13,8 +12,7 @@ router.param('id', (req, res, next, id) => {
         },
         include: [
             {model: Review},
-            {model: Color},
-            {model: Size}
+            {model: Image, as: 'images'}
         ]
     })
     .then(product => {
@@ -34,8 +32,7 @@ router.get('/', (req, res, next) => {
     Product.findAll({
         include: [
             {model: Review, as: 'reviews'},
-            {model: Color, as: 'colors'},
-            {model: Size, as: 'sizes'}
+            {model: Image, as: 'images'}
         ]
     })
     .then(products => res.json(products))
@@ -69,6 +66,21 @@ router.delete('/:id', (req, res, next) => {
     req.requestedProduct.destroy()
     .then(() => res.redirect(204, '/'))
 })
+
+/** --------------------- IMAGES -------------------- */
+
+router.post('/:id/images', (req, res, next) => {
+  Image.create(req.body)
+  .then(newImage => {
+    newImage.setProduct(req.requestedProduct);
+  })
+  .catch(next);
+})
+
+router.delete('/:id/images/:imageId', (req, res, next) => {
+
+})
+
 
 /** --------------------- REVIEWS ------------------- */
 

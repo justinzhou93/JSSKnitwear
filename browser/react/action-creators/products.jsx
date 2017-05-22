@@ -6,6 +6,8 @@ import {loadLoggedInUser} from './auth';
 export const SET_PRODUCT_LIST = 'SET_PRODUCT_LIST';
 export const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT';
 export const REMOVE_SINGLE_PRODUCT = 'REMOVE_SINGLE_PRODUCT';
+export const SET_COLLECTION = 'SET_COLLECTION';
+export const REMOVE_COLLECTION = 'REMOVE_COLLECTION';
 
 /** Action-creators */
 const settingProductList = (products) => {
@@ -22,7 +24,31 @@ const setSingleProduct = (product) => {
     }
 }
 
+const settingCollection = (collection) => {
+  console.log('action creator: ', collection);
+  return {
+      type: SET_COLLECTION,
+      collection: collection
+  }
+}
+
+const removingCollection = () => {
+  return {
+    type: REMOVE_COLLECTION,
+    collection: ''
+  }
+}
+
 /** Thunk actions */
+
+// collections
+export const setCollection = (collection) => {
+    return dispatch => dispatch(settingCollection(collection));
+};
+
+export const removeCollection = () => {
+    return dispatch => dispatch(removingCollection());
+};
 
 // load all products
 export const loadAllProducts = () => {

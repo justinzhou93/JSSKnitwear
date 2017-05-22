@@ -4,7 +4,8 @@ import { SET_PRODUCT_LIST, SET_SINGLE_PRODUCT, REMOVE_SINGLE_PRODUCT } from '../
 /** Initial State */
 const initialProductState = {
     productList: [],
-    currentProduct: null
+    currentProduct: null,
+    // collection: ''
 };
 
 /** Products reducer */
@@ -24,6 +25,14 @@ export default function (state = initialProductState, action) {
         case REMOVE_SINGLE_PRODUCT:
             newState.currentProduct = {};
             break;
+
+        // case SET_COLLECTION:
+        //     newState.collection = action.collection;
+        //     break;
+        //
+        // case REMOVE_COLLECTION:
+        //     newState.collection = '';
+        //     break;
 
         default:
             return state;

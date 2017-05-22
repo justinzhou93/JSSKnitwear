@@ -9,17 +9,23 @@ export default class NavBar extends React.Component {
         super(props);
         // this.renderLoginSignup = this.renderLoginSignup.bind(this);
         // this.renderLogout = this.renderLogout.bind(this);
+        this.resetCollection = this.resetCollection.bind(this);
+    }
+
+    resetCollection(evt){
+      evt.preventDefault();
+      this.props.removingCollection();
     }
 
     render() {
         return (
             <div className="banner">
                 <div className="logo">
-                    <h1><Link to="/" className="m_1">JSS Knitwear</Link></h1>
+                    <h1 onClick={this.resetCollection}><Link to="/" className="m_1">JSS Knitwear</Link></h1>
                 </div>
                 <div className="menu">
                     <ul className="megamenu skyblue">
-                        <li><Link to={'/products'} className="color2">Products</Link></li>
+                        <li onClick={this.resetCollection}><Link to={'/products'} className="color2">Products</Link></li>
                         {/*this.props.currentUser ? this.renderLogout() : this.renderLoginSignup()*/}
                         <li><Link to={'/home'}>About</Link></li>
                         <li><Link to={'/home'}>Contact</Link></li>

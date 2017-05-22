@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { addCartItem } from '../action-creators/users';
+import { setCollection } from '../action-creators/products';
+
 import AllProducts from '../components/AllProducts';
 import AdminProductsContainer from '../containers/AdminProductsContainer';
 import FilterBar from '../components/FilterBar';
@@ -29,6 +31,8 @@ export class AllProductsContainer extends React.Component {
                     currentUser={this.props.currentUser}
                     productList={filteredProducts}
                     addingToCart={this.props.addingToCart}
+                    collection={this.props.collection}
+                    settingCollection={this.props.settingCollection}
                 />
             );
     }
@@ -49,10 +53,14 @@ export class AllProductsContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         productList: state.products.productList,
-        currentUser: state.auth.currentUser
+        currentUser: state.auth.currentUser,
+        collection: state.collection.collection
     }
 };
 
-const mapDispatchToProps = dispatch => ({addingToCart: (userId, productId, productInfo) => dispatch(addCartItem(userId, productId, productInfo))});
+const mapDispatchToProps = dispatch => ({
+  addingToCart: (userId, productId, productInfo) => dispatch(addCartItem(userId, productId, productInfo)),
+  settingCollection: (collection) => dispatch(setCollection(collection))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductsContainer);

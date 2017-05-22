@@ -13,11 +13,8 @@ const Product = db.define('products', {
   price: {
     type: Sequelize.STRING
   },
-  imgUrl: {
-    type: Sequelize.STRING
-  },
-  tag: {
-    type: Sequelize.ENUM('day', 'evening')
+  collection: {
+    type: Sequelize.ENUM('Day', 'Evening')
   }
 });
 

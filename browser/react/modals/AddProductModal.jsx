@@ -10,10 +10,11 @@ class AddProductModal extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {inputVal: ''};
+        this.state = {collection: 'Day'};
 
         this.onClose = this.onClose.bind(this);
         this.addProductSubmit = this.addProductSubmit.bind(this);
+        this.setCollection = this.setCollection.bind(this);
     }
 
     onClose() {
@@ -26,10 +27,18 @@ class AddProductModal extends React.Component {
             title: evt.target.title.value,
             description: evt.target.description.value,
             price: evt.target.price.value,
+            collection: this.state.collection,
             imgUrl: evt.target.imgUrl.value
         }
         this.props.addingProduct(productInfo);
         this.props.hideModal();
+    }
+
+    setCollection(evt){
+      evt.preventDefault();
+      this.setState({
+        collection: evt.target.value
+      })
     }
 
     render() {
@@ -38,7 +47,7 @@ class AddProductModal extends React.Component {
           <div className="modal-lg">
             <div className="modal-content">
               <div className="modal-header">
-                  <h4 className="modal-title" style={{fontWeight: 'bold'}}>ADD NEW PRODUCT</h4>
+                <h4 className="modal-title" style={{fontWeight: 'bold'}}>ADD NEW PRODUCT</h4>
               </div>
 
               <div className="modal-body">
@@ -61,6 +70,15 @@ class AddProductModal extends React.Component {
                     <div className="input-group">
                       <input type="text" name="price" className="form-control" id="price" placeholder="Enter product price..." />
                       <label htmlFor="price" className="input-group-addon glyphicon glyphicon-usd" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <div className="input-group">
+                      <select onChange={this.setCollection}>
+                        <option value="Day">Day</option>
+                        <option value="Evening">Evening</option>
+                      </select>
                     </div>
                   </div>
 

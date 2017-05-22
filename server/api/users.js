@@ -13,24 +13,8 @@ const LineItem = db.model('lineitems');
 const Product = db.model('products');
 const Color = db.model('colors');
 const Size = db.model('sizes');
-
-
-// const {mustBeLoggedIn, forbidden} = require('./auth.filters')
-
-// module.exports = require('express').Router() // eslint-disable-line new-cap
-//   .get('/', forbidden('only admins can list users'), (req, res, next) =>
-//     User.findAll()
-//     .then(users => res.json(users))
-//     .catch(next))
-//   .post('/', (req, res, next) =>
-//     User.create(req.body)
-//     .then(user => res.status(201).json(user))
-//     .catch(next))
-//   .get('/:id', mustBeLoggedIn, (req, res, next) =>
-//     User.findById(req.params.id)
-//     .then(user => res.json(user))
-//     .catch(next))
-
+const Image = db.model('images');
+const USize = db.model('userSizes');
 
 // NOTE: this is for admin use only
 router.get('/', (req, res, next) => {
@@ -46,12 +30,15 @@ router.get('/:userId', (req, res, next) => {
         {model: Address},
         {model: CreditCard},
         {model: Review},
+        {model: USize},
         {model: Order, include: [
-            {model: LineItem, include: [
-              {model: Product},
-              {model: Color},
-              {model: Size}
-            ]}
+          {model: LineItem, include: [
+            {model: Product, include: [
+              {model: Image}
+            ]},
+            {model: Color},
+            {model: Size}
+          ]}
         ]}
       ]
     })
@@ -160,7 +147,9 @@ router.get('/:userId/cart', (req, res, next) => {
         status: 'Cart'
       },
       include: [
-        {model: Product},
+        {model: Product, include: [
+          {model: Image}
+        ]},
         {model: Color},
         {model: Size}
       ]
@@ -232,5 +221,27 @@ router.post('/:userId/orders', (req, res, next) => {
     .catch(next);
 });
 
+/** ------------------------- USER SIZES ------------------------- */
+
+router.post('/:userId/usersizes', (req, res, next) => {
+  USize.create(req.body)
+  .then(usersize => {
+    User.findById(req.params.userId)
+    .then(user => usersize.setUser(user))
+  })
+  .catch(next);
+});
+
+router.put('/:userId/usersizes', (req, res, next) => {
+  USize.update(req.body)
+  .then(updatedSize => res.send(updatedSize))
+  .catch(next);
+})
+
+router.delete('/:userId/usersizes/:userSizeId', (req, res, next) => {
+  USize.findById(req.params.userSizeId)
+  .then(foundsize => foundsize.destroy())
+  .then(() => res.redirect(204, '/'))
+});
 
 module.exports = router;
