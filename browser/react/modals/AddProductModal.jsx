@@ -10,11 +10,15 @@ class AddProductModal extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {collection: 'Day'};
+        this.state = {
+          collection: 'Day',
+          images: []
+        };
 
         this.onClose = this.onClose.bind(this);
         this.addProductSubmit = this.addProductSubmit.bind(this);
         this.setCollection = this.setCollection.bind(this);
+        this.encodeImageFileAsURL = this.encodeImageFileAsURL.bind(this);
     }
 
     onClose() {
@@ -28,7 +32,7 @@ class AddProductModal extends React.Component {
             description: evt.target.description.value,
             price: evt.target.price.value,
             collection: this.state.collection,
-            imgUrl: evt.target.imgUrl.value
+            images: this.state.images
         }
         this.props.addingProduct(productInfo);
         this.props.hideModal();
@@ -36,9 +40,25 @@ class AddProductModal extends React.Component {
 
     setCollection(evt){
       evt.preventDefault();
+      console.log(this.state);
       this.setState({
         collection: evt.target.value
       })
+    }
+
+    encodeImageFileAsURL(evt){
+      var file = evt.target.files[0];
+      let newStateImages = this.state.images;
+      newStateImages.push(file)
+      this.setState({images: newStateImages})
+      // var reader = new FileReader();
+      // reader.onloadend = function() {
+      //   let newStateImages = this.state.images;
+      //   newStateImages.push(file)
+      //   this.setState({images: newStateImages})
+      // }
+      // reader.readAsDataURL(file);
+
     }
 
     render() {
@@ -84,7 +104,7 @@ class AddProductModal extends React.Component {
 
                   <div className="form-group">
                     <div className="input-group">
-                      <input type="text" name="imgUrl" className="form-control" id="img" placeholder="Enter image URL..." />
+                      <input type="file" name="image" className="form-control" onChange={this.encodeImageFileAsURL} />
                       <label htmlFor="img" className="input-group-addon glyphicon glyphicon-globe" />
                     </div>
                   </div>

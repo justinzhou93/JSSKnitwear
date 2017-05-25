@@ -16,6 +16,8 @@ const LineItem = require('APP/db/models/lineitem');
 const Product = require('APP/db/models/product');
 const Color = require('APP/db/models/color');
 const Size = require('APP/db/models/size');
+const USize = require('APP/db/models/usersize');
+const Image = require('APP/db/models/image');
 
 /*************************
  * Auth strategies
@@ -97,11 +99,16 @@ passport.deserializeUser(
         {model: Address},
         {model: CreditCard},
         {model: Review},
-        {model: Order, include: [{model: LineItem, include: [
-          {model: Product},
-          {model: Color},
-          {model: Size}
-        ]}]},
+        {model: USize},
+        {model: Order, include: [
+          {model: LineItem, include: [
+            {model: Product, include: [
+              {model: Image}
+            ]},
+            {model: Color},
+            {model: Size}
+          ]}
+        ]},
         {model: LineItem, where: {status: 'Cart'}, required: false, include: [{model: Product}]}
       ]
     })

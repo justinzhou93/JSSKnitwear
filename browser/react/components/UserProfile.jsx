@@ -3,10 +3,113 @@ import { Link } from 'react-router';
 import StarRatingComponent from 'react-star-rating-component';
 
 import AddCreditCard from './AddCreditCard';
+import {AddMeasurements} from './AddMeasurements';
 
 export default class UserProfile extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    renderSizes() {
+      let adjustments = ['shoulder', 'waist', 'bust', 'hip', 'sleeve', 'armCircum', 'jacketLength'];
+      return (
+        <div>
+          {
+            this.props.currentUser.userSizes ? this.props.currentUser.userSizes.map((usersize) => {
+              return (
+                <div key={`measurementSet${usersize.id}`}>
+                  <div>Measurements Set {usersize.id}</div>
+                  <div><h5>Size: {usersize.main}</h5></div>
+                  <div>
+                    <h4>Adjustments</h4>
+                    {
+                      Object.keys(usersize).map(key => {
+                        if (adjustments.includes(key) && usersize[key] !== null){
+                          return (
+                            <p key={`measurementSet${usersize.id}${key}`}>{key}: {usersize[key]}</p>
+                          )
+                        }
+                      })
+                    }
+                  </div>
+                </div>
+              )
+            }) : <h5 style={{marginTop: '10px'}}>You don't have any prior measurements saved!</h5>
+          }
+        </div>
+      );
+    }
+
+    renderAddresses() {
+      return (
+        <div>
+          {
+            this.props.currentUser.addresses.length ? this.props.currentUser.addresses.map((address) => {
+              return (
+                <address key={address.id} className="managed-items" style={{letterSpacing: '1px'}}>
+                  {address.address1} {address.address2}<br />
+                  {address.city}, {address.state} {address.zipCode}<br />
+                  <Link to={'/address/edit'} className="small-link-text">Edit</Link>
+                  <span><a onClick={() => this.props.deletingAddress(this.props.currentUser.id, address.id)} className="small-link-text">Delete</a></span>
+                </address>
+              );
+            }) : <h5 style={{marginTop: '10px'}}>Your address book is empty!</h5>
+          }
+        </div>
+      );
+    }
+
+    renderCreditCards() {
+      const censorCard = (cardNum) => {
+        return 'XXXX-XXXX-XXXX-' + cardNum.slice(-4);
+      }
+      return (
+        <div>
+          {
+            this.props.currentUser.credit_cards.length ? this.props.currentUser.credit_cards.map((card) => {
+              return (
+                <div key={card.id} className="managed-items">
+                  <div className="credit-card-box">
+                    <div className="credit-card-headers">
+                      Cardholder: <br />
+                      Card number: <br />
+                      Expiration:
+                    </div>
+                    <div className="credit-card-info">
+                      {card.name} <br />
+                      {censorCard(card.number)} <br />
+                      {card.month}/{card.year}
+                    </div>
+                    <span><a onClick={() => this.props.deletingCreditCard(this.props.currentUser.id, card.id)} className="small-link-text">Delete</a></span>
+                  </div>
+                </div>
+              );
+            }) : <h5 style={{marginTop: '10px'}}>You currently have no credit cards!</h5>
+          }
+        </div>
+      );
+    }
+
+    renderReviews() {
+      const changeDate = (dateStr) => dateStr.slice(0, 10).split('-').join('/');
+      return (
+        <div>
+          {
+            this.props.currentUser.reviews.length ? this.props.currentUser.reviews.map((review) => {
+              return (
+                <div key={review.id} className="profile-review">
+                  <h4>{review.title}</h4>
+                  <StarRatingComponent name="boardgame-rating" starCount={5} value={review.rating} />
+                  <h6>{changeDate(review.date)}</h6>
+                  <p>{review.body}</p>
+                  <br />
+                  <span><a onClick={() => this.props.deletingUserReview(review.product_id, review.id)} className="small-link-text">Delete this review</a></span>
+                </div>
+              );
+            }) : <h5 style={{marginTop: '10px'}}>You haven't written any reviews!</h5>
+          }
+        </div>
+      );
     }
 
     render() {
@@ -57,82 +160,28 @@ export default class UserProfile extends React.Component {
                                 {this.props.reviewsOpen ? this.renderReviews() : null}
                         </div>
                     </div>
-
+                    <div className="user-profile-items">
+                        <div className="profile-review-items">
+                            <div className="profile-header">
+                                <h2 className="profile-review-header">Manage Measurements</h2>
+                                <a onClick={this.props.handleSizeFormClick} className="header-link-text">Add new measurements</a>
+                            </div>
+                            <div className="profile-items">
+                                {this.props.sizesFormOpen ?
+                                  <AddMeasurements
+                                    currentUser={this.props.currentUser}
+                                    addingNewMeasurements={this.props.addingNewMeasurements}
+                                    handleSizesClick={this.props.handleSizesClick}
+                                    handleSizeFormClick={this.props.handleSizeFormClick}
+                                    />
+                                  : null}
+                            </div>
+                            <span><a onClick={this.props.handleSizesClick}>Manage Measurements</a></span>
+                                {this.props.sizesOpen ? this.renderSizes() : null}
+                        </div>
+                    </div>
                 </div>
             );
         } else { return <h2>Loading user profile...</h2> }
-    }
-
-    renderAddresses() {
-        return (
-            <div>
-                {
-                    this.props.currentUser.addresses.length ? this.props.currentUser.addresses.map((address) => {
-                        return (
-                            <address key={address.id} className="managed-items" style={{letterSpacing: '1px'}}>
-                                {address.address1} {address.address2}<br />
-                                {address.city}, {address.state} {address.zipCode}<br />
-                                <Link to={'/address/edit'} className="small-link-text">Edit</Link>
-                                <span><a onClick={() => this.props.deletingAddress(this.props.currentUser.id, address.id)} className="small-link-text">Delete</a></span>
-                            </address>
-                        );
-                    }) : <h5 style={{marginTop: '10px'}}>Your address book is empty!</h5>
-                }
-            </div>
-        );
-    }
-
-    renderCreditCards() {
-        const censorCard = (cardNum) => {
-            return 'XXXX-XXXX-XXXX-' + cardNum.slice(-4);
-        }
-        return (
-            <div>
-                {
-                    this.props.currentUser.credit_cards.length ? this.props.currentUser.credit_cards.map((card) => {
-                        return (
-                            <div key={card.id} className="managed-items">
-                                <div className="credit-card-box">
-                                    <div className="credit-card-headers">
-                                        Cardholder: <br />
-                                        Card number: <br />
-                                        Expiration:
-                                    </div>
-                                    <div className="credit-card-info">
-                                        {card.name} <br />
-                                        {censorCard(card.number)} <br />
-                                        {card.month}/{card.year}
-                                    </div>
-                                    <span><a onClick={() => this.props.deletingCreditCard(this.props.currentUser.id, card.id)} className="small-link-text">Delete</a></span>
-                                </div>
-                            </div>
-                        );
-                    }) : <h5 style={{marginTop: '10px'}}>You currently have no credit cards!</h5>
-                }
-            </div>
-
-        );
-    }
-
-    renderReviews() {
-        const changeDate = (dateStr) => dateStr.slice(0, 10).split('-').join('/');
-        return (
-            <div>
-                {
-                    this.props.currentUser.reviews.length ? this.props.currentUser.reviews.map((review) => {
-                        return (
-                            <div key={review.id} className="profile-review">
-                                <h4>{review.title}</h4>
-                                <StarRatingComponent name="boardgame-rating" starCount={5} value={review.rating} />
-                                <h6>{changeDate(review.date)}</h6>
-                                <p>{review.body}</p>
-                                <br />
-                                <span><a onClick={() => this.props.deletingUserReview(review.product_id, review.id)} className="small-link-text">Delete this review</a></span>
-                            </div>
-                        );
-                    }) : <h5 style={{marginTop: '10px'}}>You haven't written any reviews!</h5>
-                }
-            </div>
-        );
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import UserProfile from '../components/UserProfile';
-import { deleteAddress, deleteCreditCard, deleteUserReview } from '../action-creators/users';
+import { deleteAddress, deleteCreditCard, deleteUserReview, addNewMeasurements } from '../action-creators/users';
 
 export class UserProfileContainer extends React.Component {
     constructor(props) {
@@ -11,12 +11,16 @@ export class UserProfileContainer extends React.Component {
             addressesOpen: false,
             creditCardFormOpen: false,
             reviewsOpen: false,
-            cardsOpen: false
+            cardsOpen: false,
+            sizesOpen: false,
+            sizesFormOpen: false
         }
         this.handleAddressClick = this.handleAddressClick.bind(this);
         this.handleCardFormClick = this.handleCardFormClick.bind(this);
         this.handleReviewsClick = this.handleReviewsClick.bind(this);
         this.handleCardsClick = this.handleCardsClick.bind(this);
+        this.handleSizesClick = this.handleSizesClick.bind(this);
+        this.handleSizeFormClick = this.handleSizeFormClick.bind(this);
     }
 
     handleAddressClick(evt) {
@@ -42,6 +46,27 @@ export class UserProfileContainer extends React.Component {
         if (this.state.cardsOpen) this.setState({cardsOpen: false});
         else this.setState({cardsOpen: true});
     }
+
+    handleSizesClick(evt) {
+        evt.preventDefault();
+        if (this.state.sizesOpen){
+          this.setState({sizesOpen: false});
+        }
+        else {
+          this.setState({sizesOpen: true});
+        }
+    }
+
+    handleSizeFormClick(evt) {
+        evt.preventDefault();
+        if (this.state.sizesFormOpen){
+          this.setState({sizesFormOpen: false})
+        }
+        else {
+          this.setState({sizesFormOpen: true})
+        }
+    }
+
     render() {
         return (
             <UserProfile
@@ -49,14 +74,19 @@ export class UserProfileContainer extends React.Component {
                 reviewsOpen={this.state.reviewsOpen}
                 creditCardFormOpen={this.state.creditCardFormOpen}
                 cardsOpen={this.state.cardsOpen}
+                sizesOpen={this.state.sizesOpen}
+                sizesFormOpen={this.state.sizesFormOpen}
                 currentUser={this.props.currentUser}
                 handleAddressClick={this.handleAddressClick}
                 handleCardsClick={this.handleCardsClick}
                 handleCardFormClick={this.handleCardFormClick}
                 handleReviewsClick={this.handleReviewsClick}
+                handleSizesClick={this.handleSizesClick}
+                handleSizeFormClick={this.handleSizeFormClick}
                 deletingAddress={this.props.deletingAddress}
                 deletingCreditCard={this.props.deletingCreditCard}
                 deletingUserReview={this.props.deletingUserReview}
+                addingNewMeasurements={this.props.addingNewMeasurements}
             />
         )
     }
@@ -72,7 +102,8 @@ const mapDispatchToProps = dispatch => {
     return {
         deletingAddress: (userId, addressId) => {dispatch(deleteAddress(userId, addressId))},
         deletingCreditCard: (userId, creditId) => {dispatch(deleteCreditCard(userId, creditId))},
-        deletingUserReview: (productId, reviewId) => {dispatch(deleteUserReview(productId, reviewId))}
+        deletingUserReview: (productId, reviewId) => {dispatch(deleteUserReview(productId, reviewId))},
+        addingNewMeasurements: (userId, measurements) => {dispatch(addNewMeasurements(userId, measurements))}
     };
 }
 

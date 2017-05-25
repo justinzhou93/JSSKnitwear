@@ -162,18 +162,31 @@ router.get('/:userId/cart', (req, res, next) => {
 
 // user adding product to cart
 router.post('/:userId/cart/:productId', (req, res, next) => {
-  console.log(req.body);
   LineItem.create({
     quantity: req.body.quantity,
     user_id: req.params.userId,
     product_id: req.params.productId,
     price: req.body.price,
     color_id: req.body.color.id,
-    size: req.body.size,
     status: 'Cart'
   })
-    .then(createdCart => {
-      res.status(201).json(createdCart);
+    .then(createdCartItem => {
+      Size.create({
+        main: req.body.size,
+        shoulder: (req.body.adjustments.shoulder !== 'default') ? req.body.adjustments.shoulder : undefined,
+        waist: (req.body.adjustments.waist !== 'default') ? req.body.adjustments.waist : undefined,
+        bust: (req.body.adjustments.bust !== 'default') ? req.body.adjustments.bust : undefined,
+        hip: (req.body.adjustments.hip !== 'default') ? req.body.adjustments.hip : undefined,
+        sleeve: (req.body.adjustments.sleeve !== 'default') ? req.body.adjustments.sleeve : undefined,
+        armCircum: (req.body.adjustments.armCircum !== 'default') ? req.body.adjustments.armCircum : undefined,
+        jacketLength: (req.body.adjustments.jacketLength !== 'default') ? req.body.adjustments.jacketLength : undefined
+      })
+      .then(createdSize => {
+        createdCartItem.setSize(createdSize)
+        .then(() => {
+          res.status(201).json(createdCartItem);
+        })
+      })
     })
     .catch(next);
 });

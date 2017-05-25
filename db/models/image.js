@@ -3,7 +3,7 @@ const db = require('APP/db');
 
 const Image = db.define('images', {
   path: {
-    type: Sequelize.STRING
+    type: Sequelize.BLOB()
   }
 });
 

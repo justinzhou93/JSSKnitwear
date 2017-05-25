@@ -71,6 +71,11 @@ export default function(props){
                   <div key={adjustment}>
                     <div>
                       <p>{adjustment} : {props.adjustments[adjustment]}</p>
+                      <img
+                        onClick={() => {props.removeAdjust(adjustment)}}
+                        src="https://image.flaticon.com/icons/png/512/0/39.png"
+                        style={{height: '20px', width: '20px'}}
+                        />
                     </div>
                   </div>
                 );

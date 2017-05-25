@@ -46,9 +46,16 @@ router.get('/:id', (req, res, next) => {
 
 // ADMIN: post new product
 router.post('/', (req, res, next) => {
+    console.log(req.body.images[0]);
     Product.create(req.body)
     .then((createdProduct) => {
-      res.json(createdProduct);
+      console.log('----1');
+      Promise.all(req.body.images.map(image => Image.create(image)))
+      .then(images => {
+        console.log('----2');
+        Promise.all(images.map(newImage => newImage.setProduct(createdProduct)))
+        .then(() => res.json(createdProduct))
+      })
     })
     .catch(next)
 })
@@ -57,7 +64,18 @@ router.post('/', (req, res, next) => {
 // recommend destroy and recreate
 router.put('/:id', (req, res, next) => {
     req.requestedProduct.update(req.body)
-    .then(updatedProduct => res.json(updatedProduct))
+    .then((updatedProduct) =>
+      // NOTE: this step might be slow, since searching all images might take forever
+      Promise.all(req.body.images.map(image => Image.findOrCreate({path: image})))
+      .then(images =>
+        Promise.all(images.map(newImage => {
+          if (newImage[1]){
+            newImage.setProduct(updatedProduct)
+          }
+        }))
+        .then(() => res.json(updatedProduct))
+      )
+    )
     .catch(next);
 })
 
@@ -69,18 +87,11 @@ router.delete('/:id', (req, res, next) => {
 
 /** --------------------- IMAGES -------------------- */
 
-router.post('/:id/images', (req, res, next) => {
-  Image.create(req.body)
-  .then(newImage => {
-    newImage.setProduct(req.requestedProduct);
-  })
-  .catch(next);
-})
-
 router.delete('/:id/images/:imageId', (req, res, next) => {
-
+  Image.findById(req.params.imageId)
+  .then(foundImage => foundImage.destroy())
+  .then(() => res.redirect(204, '/'))
 })
-
 
 /** --------------------- REVIEWS ------------------- */
 

@@ -32,12 +32,13 @@ export class SingleProductContainer extends React.Component {
         this.addToCartOnClick = this.addToCartOnClick.bind(this);
         this.handleAddReviewOnClick = this.handleAddReviewOnClick.bind(this);
         this.addAdjust = this.addAdjust.bind(this);
+        this.removeAdjust = this.removeAdjust.bind(this);
         this.addSize = this.addSize.bind(this);
     }
 
     addToCartOnClick(evt) {
         evt.preventDefault();
-        this.props.addingToCart(this.props.currentUser.id, this.props.currentProduct.id, {quantity: this.state.quantity, price: this.props.currentProduct.price, color: this.state.selectedColor})
+        this.props.addingToCart(this.props.currentUser.id, this.props.currentProduct.id, {quantity: this.state.quantity, price: this.props.currentProduct.price, color: this.state.selectedColor, size: this.state.size, adjustments: this.state.adjustments})
     }
 
     handleAddReviewOnClick(evt) {
@@ -68,6 +69,14 @@ export class SingleProductContainer extends React.Component {
         })
     }
 
+    removeAdjust(adj){
+        let newState = {};
+        newState[adj] = 'default';
+        this.setState({
+          adjustments: Object.assign({}, this.state.adjustments, newState)
+        })
+    }
+
     render() {
         return (
             <SingleProduct
@@ -78,6 +87,7 @@ export class SingleProductContainer extends React.Component {
                 colorSelect={this.colorSelect}
                 addQuantity={this.addQuantity}
                 addAdjust={this.addAdjust}
+                removeAdjust={this.removeAdjust}
                 adjustments={this.state.adjustments}
                 addSize={this.addSize}
             />

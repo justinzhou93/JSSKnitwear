@@ -23,7 +23,7 @@ export default class AdminSingleProduct extends React.Component {
         return (
             <div key={this.props.product.id}className="admin-products">
                 <div className="admin-product-img-box">
-                    <img src={this.props.product.imgUrl} className="admin-product-img" />
+                    <img src={this.props.product.images[0]} className="admin-product-img" />
                 </div>
                 <div className="admin-product-title">
                     <Link to={`/products/${this.props.product.id}`} style={{fontWeight: 'bold', marginBottom: '0'}}>{this.props.product.title}

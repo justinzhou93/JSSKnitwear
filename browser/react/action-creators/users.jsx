@@ -76,6 +76,23 @@ export const deleteUserReview = (productId, reviewId) => dispatch => {
     .catch(() => dispatch(loadLoggedInUser()))
 };
 
+export const addNewMeasurements = (userId, measurements) => dispatch => {
+  axios.post(`api/users/${userId}/usersizes`, measurements)
+    .then(() => {
+      dispatch(loadLoggedInUser());
+    })
+    .catch(() => dispatch(loadLoggedInUser()))
+}
+
+export const deleteMeasurements = (userId, measurementId) => dispatch => {
+  axios.delete(`/api/users/${userId}/usersizes/${measurementId}`)
+    .then(() => {
+      dispatch(loadLoggedInUser());
+      browserHistory.push('/user');
+    })
+    .catch(() => dispatch(loadLoggedInUser()))
+}
+
 /* ----------- ADMIN --------------- */
 export const fetchUsers = () => dispatch => {
   axios.get('/api/users')

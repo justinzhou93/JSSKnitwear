@@ -25,6 +25,7 @@ User.hasMany(Address, {onDelete: 'cascade', hooks: true});
 User.hasMany(Review);
 User.hasMany(Order);
 User.hasMany(LineItem);
+User.hasMany(USize, {onDelete: 'cascade', hooks: true});
 Address.belongsTo(User);
 CreditCard.belongsTo(User);
 Review.belongsTo(Product);

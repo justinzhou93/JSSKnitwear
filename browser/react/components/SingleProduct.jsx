@@ -19,9 +19,10 @@ export default function (props) {
             colorSelect={props.colorSelect}
             addQuantity={props.addQuantity}
             addAdjust={props.addAdjust}
+            removeAdjust={props.removeAdjust}
             adjustments={props.adjustments}
             addSize={props.addSize}
-            />
+          />
         </div>
 
         {/*product reviews*/}
