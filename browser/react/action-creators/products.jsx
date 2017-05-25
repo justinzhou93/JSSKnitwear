@@ -54,7 +54,22 @@ export const removeCollection = () => {
 export const loadAllProducts = () => {
     return dispatch => {
         axios.get('/api/products')
-            .then((res => res.data))
+            .then(res => res.data)
+            .then(products => {
+              return products.map(product => {
+                var convertedImages = product.images.map(image => {
+                  var binary = '';
+                  var bytes = new Uint8Array( image.path.data );
+                  for (var i = 0; i < bytes.byteLength; i++) {
+                      binary += String.fromCharCode( bytes[ i ] );
+                  }
+                  return 'data:image/jpeg;base64,' + window.btoa( binary );
+                })
+                console.log(convertedImages);
+                product.images = convertedImages;
+                return product;
+              })
+            })
             .then(products => dispatch(settingProductList(products)))
             .then(() => dispatch(loadLoggedInUser()));
     };

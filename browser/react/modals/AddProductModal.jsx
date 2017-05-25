@@ -48,17 +48,14 @@ class AddProductModal extends React.Component {
 
     encodeImageFileAsURL(evt){
       var file = evt.target.files[0];
-      let newStateImages = this.state.images;
-      newStateImages.push(file)
-      this.setState({images: newStateImages})
-      // var reader = new FileReader();
-      // reader.onloadend = function() {
-      //   let newStateImages = this.state.images;
-      //   newStateImages.push(file)
-      //   this.setState({images: newStateImages})
-      // }
-      // reader.readAsDataURL(file);
-
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        let newStateImages = this.state.images;
+        let url = reader.result;
+        newStateImages.push(url);
+        this.setState({images: newStateImages})
+      }.bind(this)
+      reader.readAsDataURL(file);
     }
 
     render() {
