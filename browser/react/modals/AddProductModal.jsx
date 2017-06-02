@@ -19,6 +19,7 @@ class AddProductModal extends React.Component {
         this.addProductSubmit = this.addProductSubmit.bind(this);
         this.setCollection = this.setCollection.bind(this);
         this.encodeImageFileAsURL = this.encodeImageFileAsURL.bind(this);
+        this.removeImage = this.removeImage.bind(this);
     }
 
     onClose() {
@@ -38,9 +39,14 @@ class AddProductModal extends React.Component {
         this.props.hideModal();
     }
 
+    removeImage(index) {
+      this.setState({
+        images: this.state.images.slice(0, index).concat(this.state.images.slice(index + 1, this.state.images.length))
+      })
+    }
+
     setCollection(evt){
       evt.preventDefault();
-      console.log(this.state);
       this.setState({
         collection: evt.target.value
       })
@@ -104,6 +110,13 @@ class AddProductModal extends React.Component {
                       <input type="file" name="image" className="form-control" onChange={this.encodeImageFileAsURL} />
                       <label htmlFor="img" className="input-group-addon glyphicon glyphicon-globe" />
                     </div>
+                    {
+                      this.state.images.map((image, index) => {
+                        return (
+                            <img src={image} key={`addedImage${index}`} onClick={() => {this.removeImage(index)}} />
+                        )
+                      })
+                    }
                   </div>
 
                   <div className="modal-footer">

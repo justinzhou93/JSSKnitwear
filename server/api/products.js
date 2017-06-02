@@ -63,7 +63,7 @@ router.put('/:id', (req, res, next) => {
     req.requestedProduct.update(req.body)
     .then((updatedProduct) =>
       // NOTE: this step might be slow, since searching all images might take forever
-      Promise.all(req.body.images.map(image => Image.findOrCreate({path: image})))
+      Promise.all(req.body.images.map(image => Image.create({path: image})))
       .then(images =>
         Promise.all(images.map(newImage => {
           if (newImage[1]){

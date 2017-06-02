@@ -5,11 +5,11 @@ import AdminSingleProduct from './AdminSingleProduct';
 export default function (props) {
     return (
         <div className="flex-container">
-            <div className="admin-products-header">
+            <div className="products-header">
                 <h2 className="my-account-text">Current Product List</h2>
                 <a onClick={props.showAddProductModal} className="admin-add-product">Add Product</a>
             </div>
-            <div className="admin-products-list">
+            <div className="products-container">
                 {props.productList && props.productList.map((product) => {
                     return (
                         <AdminSingleProduct

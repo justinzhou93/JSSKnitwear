@@ -21,7 +21,7 @@ export default class NavBar extends React.Component {
         return (
             <div className="banner">
                 <div className="logo">
-                    <h1 onClick={this.resetCollection}><Link to="/" className="m_1">JSS Knitwear</Link></h1>
+                    <h1 onClick={this.resetCollection}><Link to="/" >JSS Knitwear</Link></h1>
                 </div>
                 <div className="menu">
                     <ul className="megamenu skyblue">

@@ -25,7 +25,6 @@ const setSingleProduct = (product) => {
 }
 
 const settingCollection = (collection) => {
-  console.log('action creator: ', collection);
   return {
       type: SET_COLLECTION,
       collection: collection
@@ -63,15 +62,17 @@ export const loadAllProducts = () => {
                   for (var i = 0; i < bytes.byteLength; i++) {
                       binary += String.fromCharCode( bytes[ i ] );
                   }
-                  return 'data:image/jpeg;base64,' + window.btoa( binary );
+                  return {
+                    id: image.id,
+                    path: 'data:image/jpeg;base64,' + window.btoa( binary )
+                  }
                 })
-                console.log(convertedImages);
                 product.images = convertedImages;
                 return product;
               })
             })
             .then(products => dispatch(settingProductList(products)))
-            .then(() => dispatch(loadLoggedInUser()));
+            // .then(() => dispatch(loadLoggedInUser()));
     };
 };
 
@@ -79,7 +80,19 @@ export const loadAllProducts = () => {
 export const loadSingleProduct = (productId) => {
     return dispatch => {
         axios.get(`/api/products/${productId}`)
-            .then((res => res.data))
+            .then(res => res.data)
+            .then(product => {
+              var convertedImages = product.images.map(image => {
+                var binary = '';
+                var bytes = new Uint8Array( image.path.data );
+                for (var i = 0; i < bytes.byteLength; i++) {
+                    binary += String.fromCharCode( bytes[ i ] );
+                }
+                return 'data:image/jpeg;base64,' + window.btoa( binary );
+              })
+              product.images = convertedImages;
+              return product;
+            })
             .then(product => dispatch(setSingleProduct(product)));
     };
 };
@@ -125,3 +138,13 @@ export const deleteProduct = (productId) => {
             })
     };
 };
+
+export const deleteImage = (productId, imageId) => {
+    return dispatch => {
+        axios.delete(`/api/products/${productId}/images/${imageId}`)
+            .then(() => {
+                dispatch(loadAllProducts());
+                browserHistory.push('/products)');
+            })
+    }
+}
