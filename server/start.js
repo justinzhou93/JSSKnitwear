@@ -40,8 +40,8 @@ module.exports = app
   }))
 
   // Body parsing middleware
-  .use(bodyParser.urlencoded({ extended: true }))
-  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true, limit: '10mb' }))
+  .use(bodyParser.json({limit: '10mb'}))
 
   // Authentication middleware
   .use(passport.initialize())

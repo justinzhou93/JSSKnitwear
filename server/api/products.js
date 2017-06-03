@@ -46,13 +46,10 @@ router.get('/:id', (req, res, next) => {
 
 // ADMIN: post new product
 router.post('/', (req, res, next) => {
-    console.log(req.body.images[0]);
     Product.create(req.body)
     .then((createdProduct) => {
-      console.log('----1');
-      Promise.all(req.body.images.map(image => Image.create(image)))
+      Promise.all(req.body.images.map(image => Image.create({path: image})))
       .then(images => {
-        console.log('----2');
         Promise.all(images.map(newImage => newImage.setProduct(createdProduct)))
         .then(() => res.json(createdProduct))
       })
@@ -66,7 +63,7 @@ router.put('/:id', (req, res, next) => {
     req.requestedProduct.update(req.body)
     .then((updatedProduct) =>
       // NOTE: this step might be slow, since searching all images might take forever
-      Promise.all(req.body.images.map(image => Image.findOrCreate({path: image})))
+      Promise.all(req.body.images.map(image => Image.create({path: image})))
       .then(images =>
         Promise.all(images.map(newImage => {
           if (newImage[1]){

@@ -21,29 +21,25 @@ export default class AdminSingleProduct extends React.Component {
 
     render() {
         return (
-            <div key={this.props.product.id}className="admin-products">
-                <div className="admin-product-img-box">
-                    <img src={this.props.product.images[0]} className="admin-product-img" />
+            <div key={this.props.product.id}className="products-items">
+                <div className="product-image-box">
+                    <img src={this.props.product.images[0].path} className="product-img" />
                 </div>
-                <div className="admin-product-title">
+                <div className="product-title">
                     <Link to={`/products/${this.props.product.id}`} style={{fontWeight: 'bold', marginBottom: '0'}}>{this.props.product.title}
                     </Link>
                 </div>
-                <div className="admin-product-desc">
+                <div className="product-title">
                     <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Product Description</h4>
                     {this.props.product.description}
                 </div>
-                <div className="admin-product-price">
+                <div className="product-title">
                     <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Price</h4><br />
                         ${this.props.product.price}
                 </div>
-                <div className="admin-product-inv">
-                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Colors</h4><br />
-                        {this.props.product.color}
-                </div>
-                <div className="admin-product-inv">
-                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Sizes</h4><br />
-                        {this.props.product.size}
+                <div className="product-title">
+                    <h4 style={{fontWeight: 'bold', marginBottom: '0'}}>Collection</h4><br />
+                        {this.props.product.collection}
                 </div>
                 <div className="admin-links">
                     <a onClick={this.showEditProductOnClick} className="admin-remove-link">Edit</a><br />

@@ -52,8 +52,7 @@ export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchC
 }
 
 /* -----------------    CONTAINER/ONENTER HOOKS    ------------------ */
-
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchCurrentUser: () => dispatch(loadLoggedInUser()),
   fetchProducts: () => dispatch(loadAllProducts()),
   fetchSingleProduct: nextRouterState => {

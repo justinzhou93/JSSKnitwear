@@ -21,9 +21,25 @@ export default class AllProducts extends React.Component {
   render(){
     if (this.props.collection === ''){
       return (
-        <div>
-          <div value="Day" onClick={this.setDay}>Day</div>
-          <div value="Evening" onClick={this.setEvening}>Evening</div>
+        <div className="collections">
+          <div id="dayCollection" value="Day" onClick={this.setDay}>
+            <h2>Day</h2>
+            {this.props.productList && this.props.productList.filter(product => {if (product.collection === 'Day') return product}).slice(-1)
+              .map(product => {
+                return (<img key={product.id} src={product.images[0].path} />)
+              })
+            }
+          </div>
+          <div id="lightenFilter" />
+          <div id="eveningCollection" value="Evening" onClick={this.setEvening}>
+            <h2>Evening</h2>
+            {this.props.productList && this.props.productList.filter(product => {if (product.collection === 'Evening') return product}).slice(-1)
+              .map(product => {
+                return (<img key={product.id} src={product.images[0].path} />)
+              })
+            }
+          </div>
+          <div id="darkenFilter" />
         </div>
       )
     }
@@ -35,7 +51,7 @@ export default class AllProducts extends React.Component {
     return (
         <div className="flex-container">
             <div className="products-header">
-                <h2><strong>{`Products — ${this.props.collection} Collection`}</strong></h2>
+                <h2><strong>{`${this.props.collection} Collection`}</strong></h2>
             </div>
             <div className="products-container">
                 {this.props.productList.length && this.props.productList.filter((product) => {
@@ -47,7 +63,7 @@ export default class AllProducts extends React.Component {
                       <div key={product.id} className="products-items">
                         <a href={`/products/${product.id}`}>
                           <div className="product-image-box">
-                              <img src={product.images[0]} className="product-img" alt="image" />
+                              <img src={product.images[0].path} className="product-img" alt="image" />
                           </div>
                           <div className="product-title">
                               <h4>{product.title}</h4>

@@ -34,7 +34,7 @@ export default class Adjustment extends React.Component{
       <div>
           <select name="size" form="adjustForm" onChange={this.adjSelect} >
             {
-              this.props.adjustments && ['Select adjustment'].concat(Object.keys(this.props.adjustments).filter(adjustment => {
+              this.props.adjustments && ['Adjustment'].concat(Object.keys(this.props.adjustments).filter(adjustment => {
                 if (this.props.adjustments[adjustment] === 'default'){
                   return adjustment;
                 }
@@ -47,7 +47,7 @@ export default class Adjustment extends React.Component{
           </select>
 
           <select name="size" form="adjustForm" onChange={this.sizeSelect} >
-            <option value="">Select Size</option>
+            <option value="">Size</option>
             <option value="P">P</option>
             <option value="S">S</option>
             <option value="M">M</option>

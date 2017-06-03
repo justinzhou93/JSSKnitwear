@@ -11,41 +11,64 @@ export default function(props){
       backgroundColor: color.code
     }
   }
-  let QOptions = function(){
-    let arr = [];
-    for (let i = 1; i <= 25; i++){
-      arr.push(
-        <option key={`QOptions${i}`} value={i}>{i}</option>
-      );
+  let selectedStyle = function(color){
+    return {
+      width: '50px',
+      height: '50px',
+      backgroundColor: color.code,
+      border: `3px solid #BBB`
     }
-    return arr;
+  }
+  let subtractStyle = function(){
+    if (props.quantity <= 1){
+      return {
+        backgroundColor: '#e9e9e9'
+      }
+    }
   }
   return (
-    <div>
-      <div>
+    <div className="ProductSidebar">
+      <div className="ProductDescription">
         <h2>{props.currentProduct.title}</h2>
         <p>{props.currentProduct.description}</p>
       </div>
-      <div>
-        <b style={{fontSize: '20px'}}>${props.currentProduct.price}</b>
+      <div className="ProductSelection">
         <div className="productQuantity">
-          <h4>Quantity</h4>
-          <select onChange={props.addQuantity}>
-            {QOptions()}
-          </select>
+          <button style={subtractStyle()} onClick={props.subtractQuantity}><p>—</p></button>
+          <h5>Quantity</h5>
+          <h5> — </h5>
+          <h5>{props.quantity}</h5>
+          <button onClick={props.addQuantity}><p>+</p></button>
         </div>
-        <div className="admin-products-list">
+        <table type="button" className="addCartButton">
+          <tr>
+            <td>${props.currentProduct.price}</td>
+            <td><div /></td>
+            <td onClick={props.addToCartOnClick}>Add to Cart</td>
+          </tr>
+        </table>
+        <div className="colorPalette">
+          <div>
+            <h4>Color</h4>
+            <h4>{(props.selectedColor.name) ? props.selectedColor.name.toUpperCase() : ''}</h4>
+          </div>
           {props.colorList && props.colorList.map((color) => {
-            return (
-              <div className="colorSample" key={color.id} onClick={() => props.colorSelect(color)} style={style(color)}><p>{color.name}</p></div>
-            );
+            if (color === props.selectedColor){
+              return (
+                <div className="colorSample" key={color.id} onClick={() => props.colorSelect(color)} style={selectedStyle(color)} />
+              )
+            } else {
+              return (
+                <div className="colorSample" key={color.id} onClick={() => props.colorSelect(color)} style={style(color)} />
+              );
+            }
           })}
         </div>
         <div className="productSize">
           <h4>Sizes and Adjustments</h4>
 
           <div>
-            <h4>Size</h4>
+            <h5>Size</h5>
             <select name="size" onChange={props.addSize} >
               <option value="">Select Size</option>
               <option value="P">P</option>
@@ -60,7 +83,7 @@ export default function(props){
           </div>
 
           <div>
-            <h4>Adjustments</h4>
+            <h5>Adjustments</h5>
             {
               props.adjustments && Object.keys(props.adjustments).filter(adjustment => {
                 if (props.adjustments[adjustment] !== 'default'){
@@ -70,12 +93,8 @@ export default function(props){
                 return (
                   <div key={adjustment}>
                     <div>
+                      <div>✖</div>
                       <p>{adjustment} : {props.adjustments[adjustment]}</p>
-                      <img
-                        onClick={() => {props.removeAdjust(adjustment)}}
-                        src="https://image.flaticon.com/icons/png/512/0/39.png"
-                        style={{height: '20px', width: '20px'}}
-                        />
                     </div>
                   </div>
                 );
@@ -89,7 +108,6 @@ export default function(props){
           />
 
         </div>
-        <button type="button" onClick={props.addToCartOnClick} className="btn btn-primary" style={{borderRadius: '4px'}}>Add to cart</button>
       </div>
     </div>
 

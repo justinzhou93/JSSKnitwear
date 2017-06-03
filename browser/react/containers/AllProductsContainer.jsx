@@ -40,10 +40,10 @@ export class AllProductsContainer extends React.Component {
     render() {
         return (
             <div>
-                <FilterBar
+                {/*<FilterBar
                     handleChange={this.handleChange}
                     inputValue={this.state.inputValue}
-                />
+                />*/}
               {this.renderFilteredProducts()}
             </div>
         )
