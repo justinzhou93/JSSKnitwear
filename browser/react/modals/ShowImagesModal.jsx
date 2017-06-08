@@ -6,7 +6,7 @@ import { hideModal } from '../action-creators/modals';
 import ImageLegend from '../components/ImageLegend';
 import Modal from './Modal';
 
-class AddReviewModal extends React.Component {
+class ShowImagesModal extends React.Component {
     constructor(props) {
         super(props);
 
@@ -35,7 +35,7 @@ class AddReviewModal extends React.Component {
                           imageList={this.props.currentProduct.images}
                           selectImage={this.selectImage}
                         />
-                      <div className="ImgMagDisplay">
+                        <div className="ImgMagDisplay">
                           {
                             (this.props.currentProduct) ?
                               <img src={this.state.selectedImg} className="sing-product-img" />
@@ -63,4 +63,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddReviewModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowImagesModal);

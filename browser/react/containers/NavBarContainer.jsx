@@ -9,7 +9,7 @@ import { loadModal } from '../action-creators/modals';
 import {removeCollection} from '../action-creators/products';
 
 /** Modal Type Constant */
-import { LOGIN_MODAL, SIGNUP_MODAL, CART_MODAL } from '../modals/modaltypes';
+import { LOGIN_MODAL, SIGNUP_MODAL, CART_MODAL, ABOUT_MODAL, CONTACT_MODAL } from '../modals/modaltypes';
 
 export class NavBarContainer extends React.Component {
     constructor(props) {
@@ -18,6 +18,8 @@ export class NavBarContainer extends React.Component {
         this.showLoginMenu = this.showLoginMenu.bind(this);
         this.showSignupMenu = this.showSignupMenu.bind(this);
         this.showCart = this.showCart.bind(this);
+        this.showAbout = this.showAbout.bind(this);
+        this.showContact = this.showContact.bind(this);
     }
 
     showLoginMenu() {
@@ -32,6 +34,16 @@ export class NavBarContainer extends React.Component {
         this.props.loadModal(CART_MODAL);
     }
 
+    showAbout(evt) {
+        evt.preventDefault();
+        this.props.loadModal(ABOUT_MODAL);
+    }
+
+    showContact(evt) {
+        evt.preventDefault();
+        this.props.loadModal(CONTACT_MODAL);
+    }
+
     render() {
         return (
             <NavBar
@@ -41,6 +53,8 @@ export class NavBarContainer extends React.Component {
                 loggingOut={this.props.loggingOut}
                 currentUser={this.props.currentUser}
                 removingCollection={this.props.removingCollection}
+                showAbout={this.showAbout}
+                showContact={this.showContact}
             />
         );
     }

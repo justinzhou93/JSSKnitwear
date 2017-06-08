@@ -33,7 +33,7 @@ export function Root ({fetchProducts, fetchSingleProduct, fetchAllOrders, fetchC
     <Router history={browserHistory} >
       <Route path="/" component={App} onEnter={fetchProducts}>
         <IndexRedirect to="home" />
-        <Route path="home" component={HomeComponent} />
+        <Route path="home" component={AllProductsContainer} />
         <Route path="products" component={AllProductsContainer} />
         <Route path="products/:productId" component={SingleProductContainer} onEnter={fetchSingleProduct} />
         <Route path="colors" component={AdminColorsContainer} onEnter={fetchAllColors} />

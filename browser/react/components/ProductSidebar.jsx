@@ -42,7 +42,7 @@ export default function(props){
         </div>
         <table type="button" className="addCartButton">
           <tr>
-            <td>${props.currentProduct.price}</td>
+            <td>${(props.extra) ? props.currentProduct.price * 1.5 : props.currentProduct.price}</td>
             <td><div /></td>
             <td onClick={props.addToCartOnClick}>Add to Cart</td>
           </tr>
@@ -93,7 +93,7 @@ export default function(props){
                 return (
                   <div key={adjustment}>
                     <div>
-                      <div>✖</div>
+                      <div onClick={() => {props.removeAdjust(adjustment)}}>✖</div>
                       <p>{adjustment} : {props.adjustments[adjustment]}</p>
                     </div>
                   </div>

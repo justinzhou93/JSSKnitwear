@@ -162,11 +162,19 @@ router.get('/:userId/cart', (req, res, next) => {
 
 // user adding product to cart
 router.post('/:userId/cart/:productId', (req, res, next) => {
+  var multiplier = 1;
+  var extra = ['XL', '1X', '2X', '3X'];
+  if (extra.includes(req.body.size)) {
+    multiplier = 1.5;
+  }
+  if (Object.values(req.body.adjustments).some(adjustment => extra.includes(adjustment))){
+    multiplier = 1.5;
+  }
   LineItem.create({
     quantity: req.body.quantity,
     user_id: req.params.userId,
     product_id: req.params.productId,
-    price: req.body.price,
+    price: req.body.price * multiplier,
     color_id: req.body.color.id,
     status: 'Cart'
   })

@@ -11,15 +11,17 @@ export default class AllProducts extends React.Component {
   setDay(evt){
     evt.preventDefault();
     this.props.settingCollection('Day');
+    localStorage.setItem('collection', 'Day');
   }
 
   setEvening(evt){
     evt.preventDefault();
     this.props.settingCollection('Evening');
+    localStorage.setItem('collection', 'Evening');
   }
 
   render(){
-    if (this.props.collection === ''){
+    if (localStorage.getItem('collection') === ''){
       return (
         <div className="collections">
           <div id="dayCollection" value="Day" onClick={this.setDay}>
@@ -51,11 +53,11 @@ export default class AllProducts extends React.Component {
     return (
         <div className="flex-container">
             <div className="products-header">
-                <h2><strong>{`${this.props.collection} Collection`}</strong></h2>
+                <h2><strong>{`${localStorage.getItem('collection')} Collection`}</strong></h2>
             </div>
             <div className="products-container">
                 {this.props.productList.length && this.props.productList.filter((product) => {
-                  if (product.collection === this.props.collection){
+                  if (product.collection === localStorage.getItem('collection')){
                     return product;
                   }
                 }).map((product) => {

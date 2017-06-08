@@ -7,3 +7,5 @@ export const CART_MODAL = 'CART_MODAL';
 export const ADD_REVIEW_MODAL = 'ADD_REVIEW_MODAL';
 export const ADD_COLOR_MODAL = 'ADD_COLOR_MODAL';
 export const SHOW_IMAGES_MODAL = 'SHOW_IMAGES_MODAL';
+export const ABOUT_MODAL = 'ABOUT_MODAL';
+export const CONTACT_MODAL = 'CONTACT_MODAL';

@@ -28,6 +28,7 @@ class EditProductModal extends React.Component {
     }
 
     removeImage(index) {
+      this.props.deletingImage(this.props.currentProduct.id, this.state.images[index].id)
       this.setState({
         images: this.state.images.slice(0, index).concat(this.state.images.slice(index + 1, this.state.images.length))
       })
@@ -44,10 +45,12 @@ class EditProductModal extends React.Component {
       var file = evt.target.files[0];
       var reader = new FileReader();
       reader.onloadend = function() {
-        let newStateImages = this.state.images;
+        let StateImages = this.state.images;
+        let newStateImages = this.state.newImages;
         let url = reader.result;
+        StateImages.push({path: url});
         newStateImages.push(url);
-        this.setState({images: newStateImages})
+        this.setState({images: StateImages, newImages: newStateImages})
       }.bind(this)
       reader.readAsDataURL(file);
     }
@@ -58,6 +61,7 @@ class EditProductModal extends React.Component {
           title: evt.target.title.value,
           description: evt.target.description.value,
           price: evt.target.price.value,
+          tags: evt.target.tag.value,
           collection: this.state.collection,
           images: this.state.newImages
         }
@@ -94,8 +98,15 @@ class EditProductModal extends React.Component {
 
                                 <div className="form-group">
                                   <div className="input-group">
-                                    <input type="text" name="price" className="form-control" id="price" placeholder="Enter product price..." defaultValue={product.price} />
+                                    <input type="text" name="price" className="form-control" id="price" placeholder="Enter product price..." defaultValue={product.price} onClick={() => {console.log(this.state);}} />
                                     <label htmlFor="price" className="input-group-addon glyphicon glyphicon-usd" />
+                                  </div>
+                                </div>
+
+                                <div className="form-group">
+                                  <div className="input-group">
+                                    <input type="text" name="tag" className="form-control" id="tag" placeholder="Enter tags separated by commas..." />
+                                    <label htmlFor="tag" className="input-group-addon glyphicon glyphicon-usd" />
                                   </div>
                                 </div>
 

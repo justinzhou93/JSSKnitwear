@@ -24,7 +24,8 @@ export class SingleProductContainer extends React.Component {
             sleeve: 'default',
             armCircum: 'default',
             jacketLength: 'default'
-          }
+          },
+          extra: false
         }
 
         this.colorSelect = this.colorSelect.bind(this);
@@ -72,25 +73,49 @@ export class SingleProductContainer extends React.Component {
 
     addSize(evt){
         evt.preventDefault();
-        this.setState({size: evt.target.value});
+        var extra = ['XL', '1X', '2X', '3X'];
+        if (extra.includes(evt.target.value)){
+          this.setState({size: evt.target.value, extra: true});
+        } else if (Object.values(this.state.adjustments).some(size => extra.includes(size))) {
+          this.setState({size: evt.target.value, extra: true});
+        } else {
+          this.setState({size: evt.target.value, extra: false});
+        }
     }
 
     addAdjust(adj, size){
         let newState = {};
         newState[adj] = size;
+        var extra = ['XL', '1X', '2X', '3X'];
         if (Object.keys(this.state.adjustments).includes(adj)){
-          this.setState({
-            adjustments: Object.assign({}, this.state.adjustments, newState)
-          })
+          if (extra.includes(size)) {
+            this.setState({
+              adjustments: Object.assign({}, this.state.adjustments, newState),
+              extra: true
+            })
+          } else {
+            this.setState({
+              adjustments: Object.assign({}, this.state.adjustments, newState)
+            })
+          }
         }
     }
 
     removeAdjust(adj){
+        console.log('hi');
         let newState = {};
         newState[adj] = 'default';
-        this.setState({
-          adjustments: Object.assign({}, this.state.adjustments, newState)
-        })
+        var extra = ['XL', '1X', '2X', '3X'];
+        if (!Object.values(this.state.adjustments).filter(adjustment => adjustment === adj).some(size => extra.includes(size))){
+          this.setState({
+            adjustments: Object.assign({}, this.state.adjustments, newState),
+            extra: false
+          })
+        } else {
+          this.setState({
+            adjustments: Object.assign({}, this.state.adjustments, newState)
+          })
+        }
     }
 
     render() {
@@ -110,6 +135,7 @@ export class SingleProductContainer extends React.Component {
                 adjustments={this.state.adjustments}
                 addSize={this.addSize}
                 handleMagnifyImages={this.handleMagnifyImages}
+                extra={this.state.extra}
             />
         )
     }

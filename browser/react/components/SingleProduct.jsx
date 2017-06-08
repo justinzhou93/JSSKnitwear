@@ -27,6 +27,7 @@ export default function (props) {
             adjustments={props.adjustments}
             addSize={props.addSize}
             selectedColor={props.selectedColor}
+            extra={props.extra}
           />
         </div>
 
