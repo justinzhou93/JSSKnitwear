@@ -4,6 +4,7 @@ const Product = require('../../db/models/product');
 const Review = require('../../db/models/review');
 const User = require('../../db/models/user');
 const Image = require('../../db/models/image');
+const Tag = require('../../db/models/tag');
 
 router.param('id', (req, res, next, id) => {
     Product.findOne({
@@ -51,7 +52,13 @@ router.post('/', (req, res, next) => {
       Promise.all(req.body.images.map(image => Image.create({path: image})))
       .then(images => {
         Promise.all(images.map(newImage => newImage.setProduct(createdProduct)))
-        .then(() => res.json(createdProduct))
+        .then(() => {
+          Promise.all(req.body.tags.split(',').map(tag => Tag.create({tag: tag})))
+          .then(tags => {
+            Promise.all(tags.map(newTag => newTag.setProduct(createdProduct)))
+            .then(() => res.json(createdProduct));
+          })
+        })
       })
     })
     .catch(next)
@@ -65,12 +72,14 @@ router.put('/:id', (req, res, next) => {
       // NOTE: this step might be slow, since searching all images might take forever
       Promise.all(req.body.images.map(image => Image.create({path: image})))
       .then(images =>
-        Promise.all(images.map(newImage => {
-          if (newImage[1]){
-            newImage.setProduct(updatedProduct)
-          }
-        }))
-        .then(() => res.json(updatedProduct))
+        Promise.all(images.map(newImage => newImage.setProduct(updatedProduct)))
+        .then(() => {
+          Promise.all(req.body.tags.split(',').map(tag => Tag.create({tag: tag})))
+          .then(tags => {
+            Promise.all(tags.map(newTag => newTag.setProduct(updatedProduct)))
+            .then(() => res.json(updatedProduct));
+          })
+        })
       )
     )
     .catch(next);

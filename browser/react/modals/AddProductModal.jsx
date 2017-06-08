@@ -32,6 +32,7 @@ class AddProductModal extends React.Component {
             title: evt.target.title.value,
             description: evt.target.description.value,
             price: evt.target.price.value,
+            tags: evt.target.tag.value,
             collection: this.state.collection,
             images: this.state.images
         }
@@ -93,6 +94,13 @@ class AddProductModal extends React.Component {
                     <div className="input-group">
                       <input type="text" name="price" className="form-control" id="price" placeholder="Enter product price..." />
                       <label htmlFor="price" className="input-group-addon glyphicon glyphicon-usd" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <div className="input-group">
+                      <input type="text" name="tag" className="form-control" id="tag" placeholder="Enter tags separated by commas..." />
+                      <label htmlFor="tag" className="input-group-addon glyphicon glyphicon-usd" />
                     </div>
                   </div>
 

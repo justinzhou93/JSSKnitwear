@@ -15,6 +15,7 @@ export default class NavBar extends React.Component {
     resetCollection(evt){
       evt.preventDefault();
       this.props.removingCollection();
+      localStorage.setItem('collection', '');
     }
 
     render() {
@@ -27,8 +28,8 @@ export default class NavBar extends React.Component {
                     <ul className="megamenu skyblue">
                         <li onClick={this.resetCollection}><Link to={'/products'} className="color2">Products</Link></li>
                         {/*this.props.currentUser ? this.renderLogout() : this.renderLoginSignup()*/}
-                        <li><Link to={'/home'}>About</Link></li>
-                        <li><Link to={'/home'}>Contact</Link></li>
+                        <li onClick={this.props.showAbout}><Link>About</Link></li>
+                        <li onClick={this.props.showContact}><Link>Contact</Link></li>
                     </ul>
                 </div>
                 {/*<ul className="megamenu skyblue cart-link">

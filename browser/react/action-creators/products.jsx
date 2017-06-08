@@ -140,11 +140,7 @@ export const deleteProduct = (productId) => {
 };
 
 export const deleteImage = (productId, imageId) => {
-    return dispatch => {
+    return () => {
         axios.delete(`/api/products/${productId}/images/${imageId}`)
-            .then(() => {
-                dispatch(loadAllProducts());
-                browserHistory.push('/products)');
-            })
     }
 }

@@ -15,7 +15,8 @@ const Order = require('./order');
 const Color = require('./color');
 const Size = require('./size');
 const USize = require('./usersize');
-const Image = require('./image')
+const Image = require('./image');
+const Tag = require('./tag');
 
 // NOTE: added cascade for certain items in order to delete all associated items if it gets deleted
 OAuth.belongsTo(User, {onDelete: 'cascade', hooks: true})
@@ -47,5 +48,7 @@ Size.hasMany(LineItem);
 USize.belongsTo(User);
 Image.belongsTo(Product);
 Product.hasMany(Image, {onDelete: 'cascade', hooks: true});
+Product.hasMany(Tag, {onDelete: 'cascade', hooks: true});
+Tag.belongsTo(Product);
 
 module.exports = {User, CreditCard, Address, Product, Review, LineItem, Order, Color, Size, USize};
