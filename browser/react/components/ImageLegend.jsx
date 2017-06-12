@@ -14,7 +14,7 @@ export default function(props){
         (props.imageList.length) ? props.imageList.map((image, index) => {
           return (
             <div key={`imageLegend${index}`} onClick={() => {props.selectImage(image)}} className="sing-product-img-container">
-              <img src={image} style={style()} className="sing-product-img" />
+              <img src={image.path} style={style()} className="sing-product-img" />
             </div>
           )
         })

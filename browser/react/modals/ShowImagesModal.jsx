@@ -38,7 +38,7 @@ class ShowImagesModal extends React.Component {
                         <div className="ImgMagDisplay">
                           {
                             (this.props.currentProduct) ?
-                              <img src={this.state.selectedImg} className="sing-product-img" />
+                              <img src={this.state.selectedImg.path} className="sing-product-img" />
                             :
                               <p>Image Loading</p>
                           }

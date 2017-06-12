@@ -33,7 +33,7 @@ export default function(props){
         <p>{props.currentProduct.description}</p>
       </div>
       <div className="ProductSelection">
-        <div className="productQuantity">
+        {/*<div className="productQuantity">
           <button style={subtractStyle()} onClick={props.subtractQuantity}><p>—</p></button>
           <h5>Quantity</h5>
           <h5> — </h5>
@@ -46,7 +46,7 @@ export default function(props){
             <td><div /></td>
             <td onClick={props.addToCartOnClick}>Add to Cart</td>
           </tr>
-        </table>
+        </table>*/}
         <div className="colorPalette">
           <div>
             <h4>Color</h4>

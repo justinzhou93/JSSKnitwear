@@ -5,7 +5,7 @@ export default function(props){
     <div className="imageDisplay">
       {
         (props.image) ?
-          <img src={props.image} onClick={() => {props.handleMagnifyImages(props.image)}} className="sing-product-img" />
+          <img src={props.image.path} onClick={() => {props.handleMagnifyImages(props.image)}} className="sing-product-img" />
         :
           <p>Image Loading</p>
       }
