@@ -12,7 +12,8 @@ class AddProductModal extends React.Component {
 
         this.state = {
           collection: 'Day',
-          images: []
+          images: [],
+          currentImage: ''
         };
 
         this.onClose = this.onClose.bind(this);
@@ -20,10 +21,16 @@ class AddProductModal extends React.Component {
         this.setCollection = this.setCollection.bind(this);
         this.encodeImageFileAsURL = this.encodeImageFileAsURL.bind(this);
         this.removeImage = this.removeImage.bind(this);
+        this.setCurrentImage = this.setCurrentImage.bind(this);
     }
 
     onClose() {
         this.props.hideModal();
+    }
+
+    setCurrentImage(evt){
+      evt.preventDefault();
+      this.setState({currentImage: evt.target.value});
     }
 
     addProductSubmit(evt) {
@@ -54,15 +61,10 @@ class AddProductModal extends React.Component {
     }
 
     encodeImageFileAsURL(evt){
-      var file = evt.target.files[0];
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        let newStateImages = this.state.images;
-        let url = reader.result;
-        newStateImages.push(url);
-        this.setState({images: newStateImages})
-      }.bind(this)
-      reader.readAsDataURL(file);
+      evt.preventDefault();
+      let newStateImages = this.state.images;
+      newStateImages.push(this.state.currentImage.replace('www.dropbox.com', 'dl.dropboxusercontent.com'));
+      this.setState({images: newStateImages})
     }
 
     render() {
@@ -115,8 +117,8 @@ class AddProductModal extends React.Component {
 
                   <div className="form-group">
                     <div className="input-group">
-                      <input type="file" name="image" className="form-control" onChange={this.encodeImageFileAsURL} />
-                      <label htmlFor="img" className="input-group-addon glyphicon glyphicon-globe" />
+                      <input type="text" name="image" className="form-control" placeholder="Enter Image URLs" onChange={this.setCurrentImage} />
+                      <button onClick={this.encodeImageFileAsURL}>Add Image</button>
                     </div>
                     {
                       this.state.images.map((image, index) => {

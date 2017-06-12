@@ -21,12 +21,13 @@ export default class AllProducts extends React.Component {
   }
 
   render(){
-    if (localStorage.getItem('collection') === ''){
+    if (localStorage.getItem('collection') === '' || localStorage.getItem('collection') === null){
       return (
         <div className="collections">
           <div id="dayCollection" value="Day" onClick={this.setDay}>
             <h2>Day</h2>
-            {this.props.productList && this.props.productList.filter(product => {if (product.collection === 'Day') return product}).slice(-1)
+            {
+              this.props.productList && this.props.productList.filter(product => {if (product.collection === 'Day') return product}).slice(-1)
               .map(product => {
                 return (<img key={product.id} src={product.images[0].path} />)
               })

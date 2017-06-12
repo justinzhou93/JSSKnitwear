@@ -32,8 +32,6 @@ export class AdminColorsContainer extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('ownProps', ownProps);
-    console.log('state', state);
     return {
         colorList: state.colors.colorList
     }

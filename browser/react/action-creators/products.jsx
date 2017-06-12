@@ -54,23 +54,23 @@ export const loadAllProducts = () => {
     return dispatch => {
         axios.get('/api/products')
             .then(res => res.data)
-            .then(products => {
-              return products.map(product => {
-                var convertedImages = product.images.map(image => {
-                  var binary = '';
-                  var bytes = new Uint8Array( image.path.data );
-                  for (var i = 0; i < bytes.byteLength; i++) {
-                      binary += String.fromCharCode( bytes[ i ] );
-                  }
-                  return {
-                    id: image.id,
-                    path: 'data:image/jpeg;base64,' + window.btoa( binary )
-                  }
-                })
-                product.images = convertedImages;
-                return product;
-              })
-            })
+            // .then(products => {
+            //   return products.map(product => {
+            //     var convertedImages = product.images.map(image => {
+            //       var binary = '';
+            //       var bytes = new Uint8Array( image.path.data );
+            //       for (var i = 0; i < bytes.byteLength; i++) {
+            //           binary += String.fromCharCode( bytes[ i ] );
+            //       }
+            //       return {
+            //         id: image.id,
+            //         path: 'data:image/jpeg;base64,' + window.btoa( binary )
+            //       }
+            //     })
+            //     product.images = convertedImages;
+            //     return product;
+            //   })
+            // })
             .then(products => dispatch(settingProductList(products)))
             // .then(() => dispatch(loadLoggedInUser()));
     };
@@ -81,18 +81,18 @@ export const loadSingleProduct = (productId) => {
     return dispatch => {
         axios.get(`/api/products/${productId}`)
             .then(res => res.data)
-            .then(product => {
-              var convertedImages = product.images.map(image => {
-                var binary = '';
-                var bytes = new Uint8Array( image.path.data );
-                for (var i = 0; i < bytes.byteLength; i++) {
-                    binary += String.fromCharCode( bytes[ i ] );
-                }
-                return 'data:image/jpeg;base64,' + window.btoa( binary );
-              })
-              product.images = convertedImages;
-              return product;
-            })
+            // .then(product => {
+            //   var convertedImages = product.images.map(image => {
+            //     var binary = '';
+            //     var bytes = new Uint8Array( image.path.data );
+            //     for (var i = 0; i < bytes.byteLength; i++) {
+            //         binary += String.fromCharCode( bytes[ i ] );
+            //     }
+            //     return 'data:image/jpeg;base64,' + window.btoa( binary );
+            //   })
+            //   product.images = convertedImages;
+            //   return product;
+            // })
             .then(product => dispatch(setSingleProduct(product)));
     };
 };
